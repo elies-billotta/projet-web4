@@ -15,7 +15,7 @@ async function printData(setID) {
     return setData;
 }
 
-let data = await printData("75200-1");
+let data = await printData("75210-1");
 
 export default {
     name : 'Lego',
