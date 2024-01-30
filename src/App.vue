@@ -1,13 +1,14 @@
 <template>
-  <h1>Ceci est mon super site de zinzin</h1>
-  <Lego></Lego>
+  <!-- <Lego/> -->
+  <LegoGallery/>
 </template>
 
 <script>
-import Lego from '@/components/Lego.vue'
+import LegoCard from '@/components/LegoCard.vue'
+import LegoGallery from '@/components/LegoGallery.vue'
 export default {
   name: "main",
-  components: {Lego}
+  components: {LegoCard, LegoGallery}
 }
 
 </script>
