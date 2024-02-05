@@ -1,7 +1,7 @@
 <template>
     <div>
         <LegoCard 
-            v-for="lego in legolist"
+            v-for="lego in legoList"
             :key="lego.set_num"
             :set_num=" lego.set_num"
             :name ="lego.name"
@@ -19,7 +19,7 @@ export default {
     name: 'LegoGallery',
     data() {
         return {
-            legolist: []
+            legoList: []
         };
     },
     created: function () {
@@ -27,8 +27,7 @@ export default {
     },
     methods: {
         async retrieveSetData() {
-            let array = await getSetMinYear("2023");
-            this.legolist = array.results;
+            this.legoList = await getSetMinYear("2023");
         }
     },
     components: { LegoCard }
