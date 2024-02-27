@@ -1,18 +1,11 @@
 <template>
-    <div>
-        <LegoCard 
-            v-for="lego in legoList"
-            :key="lego.set_num"
-            :set_num=" lego.set_num"
-            :name ="lego.name"
-            :num_parts = "lego.num_parts"
-            :year = "lego.year"
-            :set_img_url = "lego.set_img_url"
-        />
+    <div class="list">
+        <LegoCard v-for="lego in legoList" :key="lego.set_num" :set_num="lego.set_num" :name="lego.name"
+            :num_parts="lego.num_parts" :year="lego.year" :set_img_url="lego.set_img_url" />
     </div>
 </template>
 <script>
-import {getSetMinYear} from '@/api/getSetMinYear.js'
+import { getSetMinYear } from '@/api/getSetMinYear.js'
 import LegoCard from '@/components/LegoCard.vue'
 
 export default {
@@ -27,9 +20,17 @@ export default {
     },
     methods: {
         async retrieveSetData() {
-            this.legoList = await getSetMinYear("2023");
+            this.legoList = await getSetMinYear("2023", 1);
         }
     },
     components: { LegoCard }
 }
 </script>
+
+<style>
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+</style>

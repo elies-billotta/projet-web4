@@ -1,13 +1,17 @@
 @import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@473&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+
+body {
   font-weight: normal;
+  background-color: #F4D738;
+  font-family: "Public Sans", sans-serif;
+  font-weight: 800;
+  font-style:normal;
+  margin:0;
 }
 
-a,
+/* a,
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
@@ -31,5 +35,5 @@ a,
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
-  }
-}
+  } 
+}*/

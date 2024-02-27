@@ -1,7 +1,8 @@
-const getSetMinYear = async (year) => {
+const getSetMinYear = async (year, page) => {
     try{
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/sets/?key=${import.meta.env.VITE_API_KEY}&min_year=${year}&page_size=15`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/sets/?key=${import.meta.env.VITE_API_KEY}&page=${page}&min_year=${year}&page_size=25`);
         const data = await response.json();
+        console.log(data)
         return data.results;
     }
     catch (error){
