@@ -72,6 +72,12 @@ ul {
 
 }
 
+.card:hover {
+  transform: translateX(0.2rem) translateY(0.2rem);
+  box-shadow: 0.4rem 0.4rem #05060f;
+  transition : none;
+}
+
 /*Card content*/
 .card-content {
   display: flex;

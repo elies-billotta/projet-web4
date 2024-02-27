@@ -2,28 +2,26 @@
   <div class="header">
     <h1>LEGOrganizer</h1>
     <ul class="menu">
-      <li class="btn">Accueil</li>
-      <li class="btn">Produits</li>
-      <li class="btn">Contact</li>
+      <li><Button name="Accueil"></Button></li>
+      <li><Button name="Contact"></Button></li>
+      <li><Button name="Boutique"></Button></li>
     </ul>
   </div>
 </template>
 
 <script>
+import Button from '@/components/Button.vue'
 
 export default {
   name: "main",
-  methods: {
-
-  }
+  components: { Button }
 }
 </script>
 
 <style>
 .header {
-  background-color: #FFFBFF;
-  box-shadow: 0rem 0.4rem #05060f;
-  margin-bottom: 1rem;
+  background-color: #F4D738;
+  border-bottom: #05060f 0.3vmin solid;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -42,14 +40,8 @@ h1 {
 .menu {
   display: flex;
   list-style: none;
+  justify-content: center;
 }
 
-.btn {
-  font-family: 'Lexend Mega', sans-serif;
-  font-size: 1.5rem;
-  color: #05060f;
-  cursor: pointer;
-  transition: 0.3s;
-}
 </style>
 
