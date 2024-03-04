@@ -2,30 +2,30 @@
   <div class="header">
     <h1>LEGOrganizer</h1>
     <ul class="menu">
-      <li><Button name="Accueil"></Button></li>
-      <li><Button name="Contact"></Button></li>
-      <li><Button name="Boutique"></Button></li>
+      <li><BaseButton name="Sets"></BaseButton></li>
+      <li><BaseButton name="Collection"></BaseButton></li>
     </ul>
   </div>
 </template>
 
 <script>
-import Button from '@/components/Button.vue'
+import BaseButton from '@/components/elements/BaseButton.vue'
 
 export default {
   name: "main",
-  components: { Button }
+  components: { BaseButton }
 }
 </script>
 
 <style>
 .header {
   background-color: #F4D738;
-  border-bottom: #05060f 0.3vmin solid;
+  border-bottom: #05060f 0.1rem solid;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
+  padding: 0.5rem;
 }
 
 h1 {
@@ -43,5 +43,7 @@ h1 {
   justify-content: center;
 }
 
+.menu>li {
+  margin: 0 1rem;
+}
 </style>
-

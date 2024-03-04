@@ -1,25 +1,26 @@
 <template>
   <Header></Header>
   <div class="content">
-    <Search></Search>
+    <Sidebar>
+      <Filter></Filter>
+    </Sidebar>
     <LegoGallery />
   </div>
+  <Footer></Footer>
+  <div class="background"></div>
 </template>
 
 <script>
-import Search from '@/components/Search.vue'
+import Sidebar from '@/components/Sidebar.vue'
 import LegoGallery from '@/components/LegoGallery.vue'
 import Header from '@/components/Header.vue'
+import Filter from '@/components/elements/Filter.vue'
+import Footer from '@/components/Footer.vue'
+
 export default {
   name: "main",
-  components: { LegoGallery, Search, Header },
-  methods: {
-    cleanSearch: function () {
-
-    }
-  }
+  components: { LegoGallery, Sidebar, Header, Filter, Footer }
 }
-
 </script>
 
 <style>
@@ -27,5 +28,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: rgb(245, 245, 245);
 }
 </style>
