@@ -1,9 +1,6 @@
 <template>
   <Header></Header>
   <div class="content">
-    <Sidebar>
-      <Filter></Filter>
-    </Sidebar>
     <LegoGallery />
   </div>
   <Footer></Footer>
@@ -27,7 +24,6 @@ export default {
 .content {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   background-color: rgb(245, 245, 245);
 }
 </style>

@@ -1,19 +1,24 @@
 <template>
     <div>
         <h2>Filtres</h2>
-        <input type="text" v-model="year" placeholder="Enter a year, reference..." />
-        <BaseButton name="Search"></BaseButton>
+        <input v-model="search2" @input="updateSearch" placeholder="Enter a year, reference..." />
+        <!-- <BaseButton name="Search"></BaseButton> -->
     </div>
 </template>
-  
+
 <script>
 import BaseButton from '@/components/elements/BaseButton.vue'
 export default {
-    name: "main",
+    name: "Filter",
     components: { BaseButton },
+    data() {
+        return {
+            search2: "",
+        };
+    },
     methods: {
-        cleanSearch: function () {
-            //api call with the year
+        updateSearch() {
+            this.$emit('update:search', this.search2);
         }
     }
 }
