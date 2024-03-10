@@ -14,8 +14,9 @@ export default {
 
 <style>
 footer {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     align-items: center;
     background: #FFFBFF;
     border: 0.1rem solid #05060f;
@@ -24,5 +25,6 @@ footer {
     border-left: 0;
     padding: 1rem;
     background-color: #F4D738;
+    text-align: center;
 }
 </style>
