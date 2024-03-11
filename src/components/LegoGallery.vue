@@ -1,19 +1,20 @@
 <template>
   <div class="sidebar">
-    <Filter v-model:search="search" @update:search="updateSearch" />
-    <List v-model:theme="selectedTheme" @change:selectedTheme="selectedTheme"></List>
+    <Filter v-model:search="search"/>
+    <List v-model:selectedTheme="selectedTheme"></List>
   </div>
   <div class="gallery-container">
     <div class="list">
       <!-- <input v-model="search" /> -->
       <LegoCard
-        v-for="lego in searchSet"
+        v-for="lego in filteredLegoList"
         :key="lego.set_num"
         :set_num="lego.set_num"
         :name="lego.name"
         :num_parts="lego.num_parts"
         :year="lego.year"
         :set_img_url="lego.set_img_url"
+        :theme_id="lego.theme_id"
       />
     </div>
   </div>
@@ -23,7 +24,7 @@
 import { getSetMinYear } from "@/api/getSetMinYear.js";
 import LegoCard from "@/components/LegoCard.vue";
 import Filter from "@/components/elements/Filter.vue";
-import List from "@/components/elements/List.vue"
+import List from "@/components/elements/List.vue";
 
 export default {
   name: "LegoGallery",
@@ -31,32 +32,34 @@ export default {
     return {
       legoList: [],
       search: "",
-      selectedTheme:"",
+      selectedTheme: null,
     };
   },
   computed: {
-  searchSet: function () {
-    return this.legoList.filter((lego) => {
+    filteredLegoList() {
+      let filteredList = this.legoList;
+      if (this.selectedTheme) {
+        filteredList = filteredList.filter(lego => lego.theme_id === this.selectedTheme.id);
+      }
       const searchLowerCase = this.search.toLowerCase();
-      return (
+      return filteredList.filter(lego =>
         lego.name.toLowerCase().includes(searchLowerCase) ||
         lego.set_num.toLowerCase().includes(searchLowerCase)
       );
-    });
+    },
   },
-},
   created() {
     this.retrieveSetData();
   },
   methods: {
     async retrieveSetData() {
-      this.legoList = await getSetMinYear("2010", 1);
-      console.log(this.legoList);
+      this.legoList = await getSetMinYear("2024", 1);
     },
   },
   components: { LegoCard, Filter, List },
 };
 </script>
+
 <style>
 .sidebar {
   display: flex;

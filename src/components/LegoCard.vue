@@ -19,7 +19,7 @@
               stroke="#FF331F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>{{ year }}
         </li>
-
+        <p> {{ theme_id}}</p>
       </ul>
     </div>
   </div>
@@ -35,6 +35,7 @@ export default {
     num_parts: Number,
     year: Number,
     set_img_url: String,
+    theme_id: Number,
   },
 }
 </script>

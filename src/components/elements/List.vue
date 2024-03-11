@@ -29,8 +29,8 @@
         console.log(this.themes);
       },
       updateTheme() {
-        this.$emit("update:selectedTheme", this.selectedTheme);
-        console.log(this.selectedTheme);
+        const selectedThemeObject = this.themes.find(theme => theme.name === this.selectedTheme);
+        this.$emit("update:selectedTheme", selectedThemeObject);
       },
     },
   };
