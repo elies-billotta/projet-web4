@@ -26,6 +26,7 @@ export default {
   flex-direction: row;
   align-items: center;
   padding: 0.5rem;
+  height: 100px;
 }
 
 h1 {

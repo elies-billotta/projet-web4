@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
 import LegoGallery from '@/components/LegoGallery.vue'
 import Header from '@/components/Header.vue'
 import Filter from '@/components/elements/Filter.vue'
@@ -16,7 +15,7 @@ import Footer from '@/components/Footer.vue'
 
 export default {
   name: "main",
-  components: { LegoGallery, Sidebar, Header, Filter, Footer }
+  components: { LegoGallery, Header, Filter, Footer }
 }
 </script>
 

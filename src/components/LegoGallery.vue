@@ -1,6 +1,7 @@
 <template>
   <div class="sidebar">
     <Filter v-model:search="search" @update:search="updateSearch" />
+    <List></List>
   </div>
   <div class="gallery-container">
     <div class="list">
@@ -22,6 +23,7 @@
 import { getSetMinYear } from "@/api/getSetMinYear.js";
 import LegoCard from "@/components/LegoCard.vue";
 import Filter from "@/components/elements/Filter.vue";
+import List from "@/components/elements/List.vue"
 
 export default {
   name: "LegoGallery",
@@ -32,25 +34,26 @@ export default {
     };
   },
   computed: {
-    searchSet: function () {
-      return this.legoList.filter((a) =>
-        a.name.toLowerCase().includes(this.search.toLowerCase())
+  searchSet: function () {
+    return this.legoList.filter((lego) => {
+      const searchLowerCase = this.search.toLowerCase();
+      return (
+        lego.name.toLowerCase().includes(searchLowerCase) ||
+        lego.set_num.toLowerCase().includes(searchLowerCase)
       );
-    },
+    });
   },
+},
   created() {
     this.retrieveSetData();
   },
   methods: {
     async retrieveSetData() {
-      this.legoList = await getSetMinYear("2023", 1);
+      this.legoList = await getSetMinYear("2010", 1);
       console.log(this.legoList);
     },
-    updateSearch(value) {
-      this.search = value;
-    },
   },
-  components: { LegoCard, Filter },
+  components: { LegoCard, Filter, List },
 };
 </script>
 <style>
@@ -72,8 +75,8 @@ export default {
   padding: 1rem;
 }
 .gallery-container {
-    height: 730px; /* Hauteur fixe de la galerie, ajustez selon vos besoins */
-    overflow-y: auto; /* Défilement vertical seulement si le contenu dépasse la hauteur */
-    overflow-x: hidden; /* Masquer le défilement horizontal */
+  height: calc(96vh - 50px - 100px); 
+  overflow-y: auto; 
+    overflow-x: hidden;
 }
 </style>

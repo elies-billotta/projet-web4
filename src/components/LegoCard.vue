@@ -76,6 +76,7 @@ ul {
   transform: translateX(0.2rem) translateY(0.2rem);
   box-shadow: 0.4rem 0.4rem #05060f;
   transition : none;
+  cursor: pointer;
 }
 
 /*Card content*/
