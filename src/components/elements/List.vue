@@ -1,6 +1,6 @@
 <template>
     <div>
-      <select v-model="selectedTheme">
+      <select v-model="selectedTheme" @change="updateTheme">
         <option value="">-- Choisissez un thème --</option>
         <option v-for="theme in themes" :key="theme.id" :value="theme.name">
           {{ theme.name }}
@@ -28,10 +28,9 @@
         this.themes = await getAllThemes();
         console.log(this.themes);
       },
-    },
-    watch: {
-      selectedTheme(newVal) {
-        this.$emit("update:search", newVal);
+      updateTheme() {
+        this.$emit("update:selectedTheme", this.selectedTheme);
+        console.log(this.selectedTheme);
       },
     },
   };

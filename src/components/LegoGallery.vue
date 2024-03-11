@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <Filter v-model:search="search" @update:search="updateSearch" />
-    <List></List>
+    <List v-model:theme="selectedTheme" @change:selectedTheme="selectedTheme"></List>
   </div>
   <div class="gallery-container">
     <div class="list">
@@ -31,6 +31,7 @@ export default {
     return {
       legoList: [],
       search: "",
+      selectedTheme:"",
     };
   },
   computed: {
