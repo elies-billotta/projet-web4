@@ -4,7 +4,7 @@
 <script>
 
 export default {
-  name: "main",
+  name: "BaseButton",
   props: {
     name: String,
   },
@@ -33,5 +33,4 @@ export default {
   transition: none;
 }
 </style>
-  
-  
+

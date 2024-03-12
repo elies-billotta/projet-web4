@@ -1,12 +1,10 @@
 <template>
   <div class="sidebar">
-    <Filter v-model:search="search"/>
-    <List v-model:selectedTheme="selectedTheme"></List>
-    <Accordion name="Themes"></Accordion>
+    <Filter v-model:search="search" />
+    <Accordion v-model:selectedThemes="selectedThemes"/>
   </div>
   <div class="gallery-container">
     <div class="list">
-      <!-- <input v-model="search" /> -->
       <LegoCard
         v-for="lego in filteredLegoList"
         :key="lego.set_num"
@@ -25,8 +23,8 @@
 import { getSetMinYear } from "@/api/getSetMinYear.js";
 import LegoCard from "@/components/LegoCard.vue";
 import Filter from "@/components/elements/Filter.vue";
-import List from "@/components/elements/List.vue";
-import Accordion from "@/components/elements/Accordion.vue"
+import Accordion from "@/components/elements/Accordion.vue";
+import BaseButton from "./elements/BaseButton.vue";
 
 export default {
   name: "LegoGallery",
@@ -34,20 +32,24 @@ export default {
     return {
       legoList: [],
       search: "",
-      selectedTheme: null,
+      selectedThemes: [],
     };
   },
   computed: {
     filteredLegoList() {
-      let filteredList = this.legoList;
-      if (this.selectedTheme) {
-        filteredList = filteredList.filter(lego => lego.theme_id === this.selectedTheme.id);
-      }
       const searchLowerCase = this.search.toLowerCase();
-      return filteredList.filter(lego =>
-        lego.name.toLowerCase().includes(searchLowerCase) ||
-        lego.set_num.toLowerCase().includes(searchLowerCase)
+      let filteredList = this.legoList.filter(
+        (lego) =>
+          lego.name.toLowerCase().includes(searchLowerCase) ||
+          lego.set_num.toLowerCase().includes(searchLowerCase)
       );
+      if (this.selectedThemes && this.selectedThemes.length > 0) {
+        filteredList = filteredList.filter((lego) =>
+          this.selectedThemes.includes(lego.theme_id)
+        );
+      }
+
+      return filteredList;
     },
   },
   created() {
@@ -58,7 +60,7 @@ export default {
       this.legoList = await getSetMinYear("2024", 1);
     },
   },
-  components: { LegoCard, Filter, List, Accordion },
+  components: { LegoCard, Filter, Accordion, BaseButton },
 };
 </script>
 
@@ -81,8 +83,8 @@ export default {
   padding: 1rem;
 }
 .gallery-container {
-  height: calc(96vh - 50px - 100px); 
-  overflow-y: auto; 
-    overflow-x: hidden;
+  height: calc(94.6vh - 50px - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>

@@ -2,8 +2,8 @@
   <div class="header">
     <h1>LEGOrganizer</h1>
     <ul class="menu">
-      <li><BaseButton name="Sets"></BaseButton></li>
-      <li><BaseButton name="Collection"></BaseButton></li>
+      <li><BaseButton name="Sets"/></li>
+      <li><BaseButton name="Collection"/></li>
     </ul>
   </div>
 </template>
@@ -12,7 +12,7 @@
 import BaseButton from '@/components/elements/BaseButton.vue'
 
 export default {
-  name: "main",
+  name: "Header",
   components: { BaseButton }
 }
 </script>

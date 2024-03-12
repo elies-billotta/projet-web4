@@ -30,5 +30,6 @@ input {
   border: 0.3vmin solid #05060f;
   box-shadow: 0.2rem 0.2rem #05060f;
   font-family: "Public Sans", sans-serif;
+  outline: none;
 }
 </style>

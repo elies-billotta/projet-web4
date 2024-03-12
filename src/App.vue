@@ -14,7 +14,7 @@ import Filter from '@/components/elements/Filter.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: "main",
+  name: "App",
   components: { LegoGallery, Header, Filter, Footer }
 }
 </script>
