@@ -84,7 +84,6 @@ export default {
   border-bottom: 0.1rem solid #05060f;
   border-left: none;
   border-right: none;
-  width: 100%;
   height: 2rem;
 }
 
