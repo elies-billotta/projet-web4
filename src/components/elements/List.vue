@@ -26,7 +26,6 @@
     methods: {
       async retrieveSetData() {
         this.themes = await getAllThemes();
-        console.log(this.themes);
       },
       updateTheme() {
         const selectedThemeObject = this.themes.find(theme => theme.name === this.selectedTheme);

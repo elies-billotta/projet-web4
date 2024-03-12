@@ -19,7 +19,6 @@
               stroke="#FF331F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>{{ year }}
         </li>
-        <p> {{ theme_id}}</p>
       </ul>
     </div>
   </div>

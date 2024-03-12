@@ -2,6 +2,7 @@
   <div class="sidebar">
     <Filter v-model:search="search"/>
     <List v-model:selectedTheme="selectedTheme"></List>
+    <Accordion name="Themes"></Accordion>
   </div>
   <div class="gallery-container">
     <div class="list">
@@ -25,6 +26,7 @@ import { getSetMinYear } from "@/api/getSetMinYear.js";
 import LegoCard from "@/components/LegoCard.vue";
 import Filter from "@/components/elements/Filter.vue";
 import List from "@/components/elements/List.vue";
+import Accordion from "@/components/elements/Accordion.vue"
 
 export default {
   name: "LegoGallery",
@@ -52,11 +54,11 @@ export default {
     this.retrieveSetData();
   },
   methods: {
-    async retrieveSetData() {
+    async retrieveSetData(year, page) {
       this.legoList = await getSetMinYear("2024", 1);
     },
   },
-  components: { LegoCard, Filter, List },
+  components: { LegoCard, Filter, List, Accordion },
 };
 </script>
 
