@@ -1,18 +1,18 @@
 <template>
-    <BaseButton name="Themes" @click="toggleAccordion"/>
-    <div class="panel" v-if="isAccordionOpen">
-      <div class="theme-btn" v-for="theme in themes" :key="theme.id">
-        <input
-          type="checkbox"
-          :id="theme.id"
-          :value="theme.id"
-          :checked="selectedThemes.includes(theme.id)"
-          @change="updateTheme(theme.id, $event.target.checked)"
-        />
-        <label :for="theme.id">{{ theme.name }}</label>
-      </div>
+  <BaseButton name="Themes" @click="toggleAccordion" />
+  <div class="panel" v-if="isAccordionOpen">
+    <div class="theme-btn" v-for="theme in themes" :key="theme.id">
+      <input
+        type="checkbox"
+        :id="theme.id"
+        :value="theme.id"
+        :checked="selectedThemes.includes(theme.id)"
+        @change="updateTheme(theme.id, $event.target.checked)"
+      />
+      <label :for="theme.id">{{ theme.name }}</label>
     </div>
-    <BaseButton name="Reset" @click="this.selectedThemes = []" />
+  </div>
+  <BaseButton name="Reset" v-on:click="resetSelectedThemes" />
 </template>
 
 <script>
@@ -33,20 +33,56 @@ export default {
     this.retrieveSetData();
   },
   methods: {
+    // async retrieveSetData() {
+    //   const allThemes = await getAllThemes();
+    //   const parentsMap = {};
+    //   // allThemes.forEach((theme) => {
+    //   //   if (theme.parent_id == null) parents.push(theme);
+    //   // });
+    //   // allThemes.forEach((theme) => {
+    //   //   parents.forEach((parent) => {
+    //   //     if (theme.parent_id == parent.id){
+    //   //       if (this.themes[parent] == null) 
+    //   //       this.themes[parent].push(theme);
+    //   //     }
+    //   //   });
+    //   // });
+    //   // console.log("themes", this.themes);
+
+    //   allThemes.sort((a, b) => a.id - b.id);
+    //   console.log("allThemes", allThemes);
+    //   allThemes.forEach((theme) => {
+    //     if (theme.parent_id == null) {
+    //       parentsMap[theme.id] = { ...theme, children: [] };
+    //     } else {
+    //       if (!parentsMap[theme.parent_id]) {
+    //         parentsMap[theme.parent_id] = { children: [] };
+    //       }
+    //       parentsMap[theme.parent_id].children.push(theme.id);
+    //     }
+    //   });
+    //   this.themes = Object.values(parentsMap);
+    // },
     async retrieveSetData() {
       const allThemes = await getAllThemes();
-      const parentsMap = {};
+      allThemes.sort((a, b) => a.id - b.id);
       allThemes.forEach((theme) => {
-        if (theme.parent_id == null) {
-          parentsMap[theme.id] = { ...theme, children: [] };
-        } else {
-          if (!parentsMap[theme.parent_id]) {
-            parentsMap[theme.parent_id] = { children: [] };
-          }
-          parentsMap[theme.parent_id].children.push(theme);
+        if (theme.parent_id == null){
+          let obj = {};
+          let obj_content = {};
+          obj_content["name"] = theme.name;
+          obj_content["children"] = [];
+          obj[theme.id] = obj_content;
+          this.themes.push(obj);
         }
+        this.themes.forEach((parent) => {
+          console.log(Object.keys(parent));
+        });
       });
-      this.themes = Object.values(parentsMap);
+    },
+
+    toggleAccordion() {
+      this.isAccordionOpen = !this.isAccordionOpen;
     },
     updateTheme(themeId, checked) {
       if (checked) {
@@ -59,14 +95,15 @@ export default {
       }
       this.$emit("update:selectedThemes", this.selectedThemes);
     },
-    toggleAccordion() {
-      this.isAccordionOpen = !this.isAccordionOpen;
+    resetSelectedThemes() {
+      this.selectedThemes = [];
+      this.$emit("update:selectedThemes", this.selectedThemes);
     },
   },
 };
 </script>
-<style>
 
+<style>
 .panel {
   margin-top: 5%;
   max-height: 400px;
@@ -90,5 +127,4 @@ export default {
 .theme-btn label {
   margin-left: 1rem;
 }
-
 </style>

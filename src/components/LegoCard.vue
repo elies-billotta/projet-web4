@@ -20,6 +20,7 @@
           </svg>{{ year }}
         </li>
       </ul>
+      <p> {{  this.theme_id }}</p>
     </div>
   </div>
 </template>

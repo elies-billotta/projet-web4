@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async retrieveSetData(year, page) {
-      this.legoList = await getSetMinYear("2024", 1);
+      this.legoList = await getSetMinYear("2012", 1);
     },
   },
   components: { LegoCard, Filter, Accordion, BaseButton },
