@@ -33,52 +33,33 @@ export default {
     this.retrieveSetData();
   },
   methods: {
-    // async retrieveSetData() {
-    //   const allThemes = await getAllThemes();
-    //   const parentsMap = {};
-    //   // allThemes.forEach((theme) => {
-    //   //   if (theme.parent_id == null) parents.push(theme);
-    //   // });
-    //   // allThemes.forEach((theme) => {
-    //   //   parents.forEach((parent) => {
-    //   //     if (theme.parent_id == parent.id){
-    //   //       if (this.themes[parent] == null) 
-    //   //       this.themes[parent].push(theme);
-    //   //     }
-    //   //   });
-    //   // });
-    //   // console.log("themes", this.themes);
-
-    //   allThemes.sort((a, b) => a.id - b.id);
-    //   console.log("allThemes", allThemes);
-    //   allThemes.forEach((theme) => {
-    //     if (theme.parent_id == null) {
-    //       parentsMap[theme.id] = { ...theme, children: [] };
-    //     } else {
-    //       if (!parentsMap[theme.parent_id]) {
-    //         parentsMap[theme.parent_id] = { children: [] };
-    //       }
-    //       parentsMap[theme.parent_id].children.push(theme.id);
-    //     }
-    //   });
-    //   this.themes = Object.values(parentsMap);
-    // },
     async retrieveSetData() {
       const allThemes = await getAllThemes();
       allThemes.sort((a, b) => a.id - b.id);
+      const parentMap = {};
       allThemes.forEach((theme) => {
-        if (theme.parent_id == null){
-          let obj = {};
-          let obj_content = {};
-          obj_content["name"] = theme.name;
-          obj_content["children"] = [];
-          obj[theme.id] = obj_content;
-          this.themes.push(obj);
+        if (theme.parent_id === null) {
+          this.themes.push({
+            id: theme.id,
+            name: theme.name,
+            children: [],
+          });
+        } else {
+          if (!parentMap.hasOwnProperty(theme.parent_id)) {
+            parentMap[theme.parent_id] = [];
+          }
+          parentMap[theme.parent_id].push({
+            id: theme.id,
+            name: theme.name,
+          });
         }
-        this.themes.forEach((parent) => {
-          console.log(Object.keys(parent));
-        });
       });
+      this.themes.forEach((theme) => {
+        if (parentMap.hasOwnProperty(theme.id)) {
+          theme.children = parentMap[theme.id];
+        }
+      });
+      console.log(Object.values(this.themes[1]));
     },
 
     toggleAccordion() {

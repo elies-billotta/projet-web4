@@ -43,6 +43,7 @@ export default {
           lego.name.toLowerCase().includes(searchLowerCase) ||
           lego.set_num.toLowerCase().includes(searchLowerCase)
       );
+      console.log(this.selectedThemes);
       if (this.selectedThemes && this.selectedThemes.length > 0) {
         filteredList = filteredList.filter((lego) =>
           this.selectedThemes.includes(lego.theme_id)
