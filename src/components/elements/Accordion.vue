@@ -9,7 +9,7 @@
         :checked="selectedThemes.includes(theme.id)"
         @change="updateTheme(theme.id, $event.target.checked)"
       />
-      <label :for="theme.id">{{ theme.name }}</label>
+      <div class="themeInList"><label :for="theme.id">{{ theme.name }}</label></div>
     </div>
   </div>
   <BaseButton name="Reset" v-on:click="resetSelectedThemes" />
@@ -103,26 +103,31 @@ export default {
 
 <style>
 .panel {
-  margin-top: 5%;
-  max-height: 400px;
+  margin-top: 5px;
+  max-height: 390px;
   overflow-y: auto;
-  transition: max-height 0.5s ease-out;
+  transition: max-height 1s ease-out;
   scrollbar-width: none;
 }
 
 .theme-btn {
   display: flex;
   background-color: rgb(245, 245, 245);
-  flex-direction: row;
   align-items: center;
-  padding: 0.1rem;
   border-bottom: 0.1rem solid #05060f;
   border-left: none;
   border-right: none;
   height: 2rem;
+  overflow: hidden;
+  width: 220px;
 }
 
 .theme-btn label {
   margin-left: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: clamp(12px, 1vw, 16px);
+  max-width: 100%;
+  position: relative; 
 }
 </style>

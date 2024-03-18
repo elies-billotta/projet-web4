@@ -1,9 +1,16 @@
 <template>
   <div class="sidebar">
     <Filter v-model:search="search" />
-    <input type="range" min="1965" max="2024" step="1" v-model="year" @change="getGalleryYear">
+    <input
+      type="range"
+      min="1965"
+      max="2024"
+      step="1"
+      v-model="year"
+      @change="getGalleryYear"
+    />
     <p>{{ year }}</p>
-    <Accordion v-model:selectedThemes="selectedThemes"/>
+    <Accordion v-model:selectedThemes="selectedThemes" />
   </div>
   <div class="gallery-container">
     <div class="list">
@@ -16,6 +23,9 @@
         :year="lego.year"
         :set_img_url="lego.set_img_url"
         :theme_id="lego.theme_id"
+        :themeName="
+          this.themes.find((theme) => theme.id === lego.theme_id).name
+        "
       />
     </div>
   </div>
@@ -23,6 +33,7 @@
 
 <script>
 import { getSetMinYear } from "@/api/getSetMinYear.js";
+import { getAllThemes } from "@/api/getAllThemes.js";
 import LegoCard from "@/components/LegoCard.vue";
 import Filter from "@/components/elements/Filter.vue";
 import Accordion from "@/components/elements/Accordion.vue";
@@ -35,7 +46,8 @@ export default {
       legoList: [],
       search: "",
       selectedThemes: [],
-      year:2024
+      year:2024,
+      themes : [],
     };
   },
   computed: {
@@ -56,6 +68,7 @@ export default {
   },
   created() {
     this.retrieveSetData("2024", 1);
+    this.retrieveThemes();
   },
   methods: {
     async retrieveSetData(year, page) {
@@ -63,7 +76,14 @@ export default {
     },
     getGalleryYear(){
       this.retrieveSetData(this.year, 1);
+    },
+    async retrieveThemes() {
+      try {
+    this.themes = await getAllThemes();
+  } catch (error) {
+    console.error("Error retrieving themes:", error);
     }
+  },
   },
   components: { LegoCard, Filter, Accordion, BaseButton },
 };
@@ -84,7 +104,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 1rem;
 }
 .gallery-container {
