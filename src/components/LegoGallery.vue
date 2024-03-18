@@ -1,6 +1,8 @@
 <template>
   <div class="sidebar">
     <Filter v-model:search="search" />
+    <input type="range" min="1965" max="2024" step="1" v-model="year" @change="getGalleryYear">
+    <p>{{ year }}</p>
     <Accordion v-model:selectedThemes="selectedThemes"/>
   </div>
   <div class="gallery-container">
@@ -33,6 +35,7 @@ export default {
       legoList: [],
       search: "",
       selectedThemes: [],
+      year:2024
     };
   },
   computed: {
@@ -43,23 +46,24 @@ export default {
           lego.name.toLowerCase().includes(searchLowerCase) ||
           lego.set_num.toLowerCase().includes(searchLowerCase)
       );
-      console.log(this.selectedThemes);
-      if (this.selectedThemes && this.selectedThemes.length > 0) {
+      if (this.selectedThemes.length > 0) {
         filteredList = filteredList.filter((lego) =>
           this.selectedThemes.includes(lego.theme_id)
         );
       }
-
       return filteredList;
     },
   },
   created() {
-    this.retrieveSetData();
+    this.retrieveSetData("2024", 1);
   },
   methods: {
     async retrieveSetData(year, page) {
-      this.legoList = await getSetMinYear("2012", 1);
+      this.legoList = await getSetMinYear(year, page);
     },
+    getGalleryYear(){
+      this.retrieveSetData(this.year, 1);
+    }
   },
   components: { LegoCard, Filter, Accordion, BaseButton },
 };
