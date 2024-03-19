@@ -23,6 +23,5 @@ export default {
 .content {
     display: flex;
     flex-direction: row;
-    background-color: rgb(245, 245, 245);
 }
 </style>
