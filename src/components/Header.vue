@@ -2,8 +2,12 @@
   <div class="header">
     <h1>LEGOrganizer</h1>
     <ul class="menu">
-      <li><BaseButton name="Sets"/></li>
-      <li><BaseButton name="Collection"/></li>
+      <li><router-link to="/">
+          <BaseButton name="Sets" />
+        </router-link></li>
+      <li><router-link to="/collection">
+          <BaseButton name="Collection" />
+        </router-link></li>
     </ul>
   </div>
 </template>

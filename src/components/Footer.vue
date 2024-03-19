@@ -5,11 +5,9 @@
 </template>
 
 <script>
-
 export default {
     name: "Footer",
-}
-
+};
 </script>
 
 <style>
@@ -24,7 +22,7 @@ footer {
     border-right: 0;
     border-left: 0;
     padding: 1rem;
-    background-color: #F4D738;
+    background-color: #f4d738;
     text-align: center;
 }
 </style>

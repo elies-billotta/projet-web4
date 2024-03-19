@@ -1,32 +1,15 @@
 <template>
   <div class="sidebar">
     <Filter v-model:search="search" />
-    <input
-      type="range"
-      min="1965"
-      max="2024"
-      step="1"
-      v-model="year"
-      @change="getGalleryYear"
-    />
+    <input type="range" min="1965" max="2024" step="1" v-model="year" @change="getGalleryYear" />
     <p>{{ year }}</p>
     <Accordion v-model:selectedThemes="selectedThemes" />
   </div>
   <div class="gallery-container">
     <div class="list">
-      <LegoCard
-        v-for="lego in filteredLegoList"
-        :key="lego.set_num"
-        :set_num="lego.set_num"
-        :name="lego.name"
-        :num_parts="lego.num_parts"
-        :year="lego.year"
-        :set_img_url="lego.set_img_url"
-        :theme_id="lego.theme_id"
-        :themeName="
-          this.themes.find((theme) => theme.id === lego.theme_id).name
-        "
-      />
+      <LegoCard v-for="lego in filteredLegoList" :key="lego.set_num" :set_num="lego.set_num" :name="lego.name"
+        :num_parts="lego.num_parts" :year="lego.year" :set_img_url="lego.set_img_url" :theme_id="lego.theme_id"
+        :themeName="this.themes.find((theme) => theme.id === lego.theme_id).name" />
     </div>
   </div>
 </template>
@@ -46,8 +29,8 @@ export default {
       legoList: [],
       search: "",
       selectedThemes: [],
-      year:2024,
-      themes : [],
+      year: 2024,
+      themes: [],
     };
   },
   computed: {
@@ -74,16 +57,16 @@ export default {
     async retrieveSetData(year, page) {
       this.legoList = await getSetMinYear(year, page);
     },
-    getGalleryYear(){
+    getGalleryYear() {
       this.retrieveSetData(this.year, 1);
     },
     async retrieveThemes() {
       try {
-    this.themes = await getAllThemes();
-  } catch (error) {
-    console.error("Error retrieving themes:", error);
-    }
-  },
+        this.themes = await getAllThemes();
+      } catch (error) {
+        console.error("Error retrieving themes:", error);
+      }
+    },
   },
   components: { LegoCard, Filter, Accordion, BaseButton },
 };
@@ -100,6 +83,7 @@ export default {
   border-left: 0;
   padding: 1rem;
 }
+
 .list {
   display: flex;
   flex-direction: row;
@@ -107,6 +91,7 @@ export default {
   justify-content: space-around;
   padding: 1rem;
 }
+
 .gallery-container {
   height: calc(94.6vh - 50px - 100px);
   overflow-y: auto;

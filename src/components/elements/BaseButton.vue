@@ -10,7 +10,7 @@ export default {
   },
 }
 </script>
-  
+
 <style>
 .btn {
   margin-top: 1rem;
@@ -33,4 +33,3 @@ export default {
   transition: none;
 }
 </style>
-

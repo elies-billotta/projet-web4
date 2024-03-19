@@ -2,13 +2,8 @@
   <BaseButton name="Themes" @click="toggleAccordion" />
   <div class="panel" v-if="isAccordionOpen">
     <div class="theme-btn" v-for="theme in themes" :key="theme.id">
-      <input
-        type="checkbox"
-        :id="theme.id"
-        :value="theme.id"
-        :checked="selectedThemes.includes(theme.id)"
-        @change="updateTheme(theme.id, $event.target.checked)"
-      />
+      <input type="checkbox" :id="theme.id" :value="theme.id" :checked="selectedThemes.includes(theme.id)"
+        @change="updateTheme(theme.id, $event.target.checked)" />
       <div class="themeInList"><label :for="theme.id">{{ theme.name }}</label></div>
     </div>
   </div>
@@ -60,16 +55,16 @@ export default {
         }
       });
       this.themes.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  });
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
     },
 
     toggleAccordion() {
@@ -128,6 +123,6 @@ export default {
   overflow: hidden;
   font-size: clamp(12px, 1vw, 16px);
   max-width: 100%;
-  position: relative; 
+  position: relative;
 }
 </style>

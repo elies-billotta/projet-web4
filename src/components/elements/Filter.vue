@@ -1,11 +1,7 @@
 <template>
   <div>
     <h2>Filtres</h2>
-    <input
-      v-model="search"
-      @input="updateSearch"
-      placeholder="Enter a name, reference..."
-    />
+    <input v-model="search" @input="updateSearch" placeholder="Enter a name, reference..." />
   </div>
 </template>
 
