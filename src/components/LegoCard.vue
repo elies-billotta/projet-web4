@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{ 'hovered': isHovered }" @mouseover="hoverDelay" @mouseleave="removeHover">
     <div class="imgContainer"><img pictureUrl="" v-bind:src="set_img_url" /></div>
     <div class="card-content">
       <div class="set_num">{{ set_num }}</div>
@@ -45,6 +45,22 @@ export default {
     themes: Array,
     themeName: String,
   },
+  data() {
+    return {
+      isHovered: false,
+      showAddToCollection: false,
+    };
+  },
+  methods: {
+    hoverDelay() {
+      setTimeout(() => {
+        this.showAddToCollection = true;
+      }, 1000); // Délai de 1 seconde avant d'afficher la div .addToCollection
+    },
+    removeHover() {
+      this.showAddToCollection = false;
+    }
+  }
 }
 </script>
 
@@ -94,6 +110,7 @@ ul {
   height: 100%;
   flex-direction: column;
   margin-top: 1rem;
+  position: relative;
 }
 
 .name {
@@ -124,4 +141,5 @@ ul {
   align-items: center;
   gap: 4px;
 }
+
 </style>
