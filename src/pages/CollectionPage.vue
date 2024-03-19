@@ -1,7 +1,10 @@
 <template>
-    <div>
-      <router-view></router-view>
+    <Header></Header>
+    <div class="content">
+        <p>Coming soon...</p>
     </div>
+    <Footer></Footer>
+    <div class="background"></div>
   </template>
   
   <script>
@@ -12,7 +15,7 @@
   
   
   export default {
-    name: "App",
+    name: "CollectionPage",
     components: { LegoGallery, Header, Filter, Footer }
   }
   </script>
