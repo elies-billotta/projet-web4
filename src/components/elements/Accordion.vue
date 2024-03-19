@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       themes: [],
-      selectedThemes: [],
-      isAccordionOpen: false,
+      selectedThemes: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).themes : [],
+      isAccordionOpen: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).themes.length > 0 : false,
     };
   },
   components: { BaseButton },
@@ -86,10 +86,16 @@ export default {
           );
         }
       }
+      const filters = JSON.parse(localStorage.getItem("filters"));
+      filters.themes = this.selectedThemes;
+      localStorage.setItem("filters", JSON.stringify(filters));
       this.$emit("update:selectedThemes", this.selectedThemes);
     },
     resetSelectedThemes() {
       this.selectedThemes = [];
+      const filters = JSON.parse(localStorage.getItem("filters"));
+      filters.themes = this.selectedThemes;
+      localStorage.setItem("filters", JSON.stringify(filters));
       this.$emit("update:selectedThemes", this.selectedThemes);
     },
   },

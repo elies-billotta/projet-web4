@@ -1,7 +1,7 @@
 <template>
     <Header></Header>
     <div class="content">
-        <p>Coming soon...</p>
+        <Collection/>
     </div>
     <Footer></Footer>
 </template>
@@ -11,11 +11,12 @@ import LegoGallery from '@/components/LegoGallery.vue'
 import Header from '@/components/Header.vue'
 import Filter from '@/components/elements/Filter.vue'
 import Footer from '@/components/Footer.vue'
+import Collection from '@/components/Collection.vue'
 
 
 export default {
     name: "CollectionPage",
-    components: { LegoGallery, Header, Filter, Footer }
+    components: { LegoGallery, Header, Filter, Footer, Collection }
 }
 </script>
 

@@ -1,8 +1,7 @@
 <template>
   <div class="sidebar">
     <Filter v-model:search="search" />
-    <input type="range" min="1965" max="2024" step="1" v-model="year" @change="getGalleryYear" />
-    <p>{{ year }}</p>
+    <YearFilter v-model:year="year" @year-changed="onYearChanged" />
     <Accordion v-model:selectedThemes="selectedThemes" />
   </div>
   <div class="gallery-container">
@@ -21,15 +20,19 @@ import LegoCard from "@/components/LegoCard.vue";
 import Filter from "@/components/elements/Filter.vue";
 import Accordion from "@/components/elements/Accordion.vue";
 import BaseButton from "./elements/BaseButton.vue";
+import YearFilter from "@/components/elements/YearFilter.vue";
 
 export default {
   name: "LegoGallery",
+  props: {
+    view: String,
+  },
   data() {
     return {
       legoList: [],
-      search: "",
-      selectedThemes: [],
-      year: 2024,
+      search: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).search : "",
+      selectedThemes: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).themes : [],
+      year: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).year : "2024",
       themes: [],
     };
   },
@@ -50,15 +53,23 @@ export default {
     },
   },
   created() {
-    this.retrieveSetData("2024", 1);
+    if (this.view == "collection" && JSON.parse(localStorage.getItem("collection")).length > 0) {
+      console.log(JSON.parse(localStorage.getItem("collection")));
+      this.legoList = JSON.parse(localStorage.getItem("collection"));
+    }
+    else {
+      this.retrieveSetData(this.year, 1);
+    }
     this.retrieveThemes();
   },
   methods: {
     async retrieveSetData(year, page) {
-      this.legoList = await getSetMinYear(year, page);
-    },
-    getGalleryYear() {
-      this.retrieveSetData(this.year, 1);
+      try {
+        this.legoList = await getSetMinYear(year, page);
+      }
+      catch (error) {
+        console.error("Error retrieving set data:", error);
+      }
     },
     async retrieveThemes() {
       try {
@@ -67,8 +78,15 @@ export default {
         console.error("Error retrieving themes:", error);
       }
     },
+    getGalleryYear() {
+      this.retrieveSetData(this.year, 1);
+    },
+    onYearChanged(newYear) {
+      this.year = newYear;
+      this.retrieveSetData(this.year, 1);
+    },
   },
-  components: { LegoCard, Filter, Accordion, BaseButton },
+  components: { LegoCard, Filter, Accordion, BaseButton, YearFilter },
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Filtres</h2>
+    <h3>Filtres</h3>
     <input v-model="search" @input="updateSearch" placeholder="Enter a name, reference..." />
   </div>
 </template>
@@ -15,8 +15,15 @@ export default {
   },
   methods: {
     updateSearch() {
-      this.$emit("update:search", this.search);
+        const filters = JSON.parse(localStorage.getItem("filters"));
+        filters.search = this.search;
+        localStorage.setItem("filters", JSON.stringify(filters));
+        this.$emit("update:search", this.search);
     },
+  },
+  created() {
+    const filters = JSON.parse(localStorage.getItem("filters"));
+    this.search = filters.search;
   },
 };
 </script>

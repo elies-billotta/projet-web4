@@ -1,7 +1,7 @@
 <template>
   <Header></Header>
   <div class="content">
-    <LegoGallery />
+    <LegoGallery view="gallery"/>
   </div>
   <Footer></Footer>
 </template>

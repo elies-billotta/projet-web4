@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="{ 'hovered': isHovered }" @mouseover="hoverDelay" @mouseleave="removeHover">
+  <div class="card">
     <div class="imgContainer"><img pictureUrl="" v-bind:src="set_img_url" /></div>
     <div class="card-content">
       <div class="set_num">{{ set_num }}</div>
@@ -27,11 +27,17 @@
           </svg>{{ year }}
         </li>
       </ul>
+      <div class="button-container">
+        <BaseButton class="cardButton" v-if="!inCollection" name="Add to collection" @click="addToCollection" />
+        <BaseButton class="cardButton" id="removeButton" v-if="inCollection" name="Remove from collection" @click="addToCollection" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
+import BaseButton from './elements/BaseButton.vue';
 
 export default {
   name: 'LegoCard',
@@ -47,20 +53,48 @@ export default {
   },
   data() {
     return {
-      isHovered: false,
-      showAddToCollection: false,
+      inCollection: false,
     };
   },
   methods: {
-    hoverDelay() {
-      setTimeout(() => {
-        this.showAddToCollection = true;
-      }, 1000); // Délai de 1 seconde avant d'afficher la div .addToCollection
+    addToCollection() {
+      if (!this.inCollection) {
+        this.inCollection = true;
+        //build an object with the props and emit it
+        const set = {
+          set_num: this.set_num,
+          name: this.name,
+          num_parts: this.num_parts,
+          year: this.year,
+          set_img_url: this.set_img_url,
+          theme_id: this.theme_id,
+          themeName: this.themeName,
+        };
+        let collection = localStorage.getItem('collection');
+        collection = JSON.parse(collection);
+        collection.push(set);
+        //order collection by set_num
+        collection.sort((a, b) => a.set_num.localeCompare(b.set_num));
+        localStorage.collection = JSON.stringify(collection);
+      }
+      else {
+        this.inCollection = false;
+        let collection = localStorage.getItem('collection');
+        collection = JSON.parse(collection);
+        collection = collection.filter((set) => set.set_num !== this.set_num);
+        localStorage.collection = JSON.stringify(collection);
+        this.$emit('item-removed', this.set_num);
+      }
     },
-    removeHover() {
-      this.showAddToCollection = false;
-    }
-  }
+  },
+  components: {
+    BaseButton,
+  },
+  created() {
+    let collection = localStorage.getItem('collection');
+    collection = JSON.parse(collection);
+    this.inCollection = collection.some((set) => set.set_num === this.set_num);
+  },
 }
 </script>
 
@@ -80,10 +114,6 @@ img {
   ;
 }
 
-ul {
-  padding: 0;
-}
-
 .card {
   width: 325px;
   background: #FFFBFF;
@@ -94,29 +124,25 @@ ul {
   overflow: hidden;
   color: black;
   margin: 1rem;
-
 }
 
 .card:hover {
   transform: translateX(0.2rem) translateY(0.2rem);
   box-shadow: 0.4rem 0.4rem #05060f;
   transition: none;
-  cursor: pointer;
 }
 
 /*Card content*/
 .card-content {
   display: flex;
-  height: 100%;
   flex-direction: column;
-  margin-top: 1rem;
-  position: relative;
+  height: 250px; /* Ajoutez la hauteur fixe souhaitée */
 }
 
 .name {
   display: flex;
   color: #05060f;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   line-height: 1.25;
   font-weight: 700;
   font-family: "Lexend Mega", sans-serif;
@@ -133,13 +159,28 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: auto;
+  margin-bottom: 0.5rem;
+  padding: 0;
 }
 
 .check-list-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Ajustez l'alignement vertical ici */
   gap: 4px;
+}
+#removeButton {
+  background-color: #FF331F;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100% ; /* Pour aligner les boutons à droite */
+}
+
+.cardButton {
+  flex:1;
 }
 
 </style>
