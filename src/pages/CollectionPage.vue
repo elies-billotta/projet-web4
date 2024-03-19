@@ -13,7 +13,6 @@ import Filter from '@/components/elements/Filter.vue'
 import Footer from '@/components/Footer.vue'
 import Collection from '@/components/Collection.vue'
 
-
 export default {
     name: "CollectionPage",
     components: { LegoGallery, Header, Filter, Footer, Collection }

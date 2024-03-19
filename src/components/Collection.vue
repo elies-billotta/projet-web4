@@ -3,13 +3,13 @@
         <h2>Ma collection</h2>
         <div>Total des pièces : {{ nbPartsTotal }}</div>
         <div>Thème favori : {{ favoriteTheme }}</div>
-        <Filter v-model:search="search" />
-        <YearFilter v-model:year="year" @year-changed="onYearChanged" />
-        <Accordion v-model:selectedThemes="selectedThemes" />
+        <Filter v-model:search="search" type="collection" />
+        <YearFilter v-model:year="year" @year-changed="onYearChanged" type="collection" @range-status-changed="onRangeStatusChanged" />
+        <Accordion v-model:selectedThemes="selectedThemes" type="collection" />
     </div>
     <div class="gallery-container">
         <div class="list">
-            <LegoCard v-for="set in collection" :key="set.set_num" :set_num="set.set_num" :name="set.name"
+            <LegoCard v-for="set in filteredLegoList" :key="set.set_num" :set_num="set.set_num" :name="set.name"
                 :num_parts="set.num_parts" :year="set.year" :set_img_url="set.set_img_url" :theme_id="set.theme_id"
                 :themeName="set.themeName" @item-removed="removeItemFromCollection" />
         </div>
@@ -30,6 +30,10 @@ export default {
             collection: [],
             nbPartsTotal: 0,
             favoriteTheme: "",
+            search: localStorage.getItem("collection") ? JSON.parse(localStorage.getItem("collection")).filters.search : "",
+            selectedThemes: localStorage.getItem("collection") ? JSON.parse(localStorage.getItem("collection")).filters.themes : [],
+            year: localStorage.getItem("collection") ? JSON.parse(localStorage.getItem("collection")).filters.year : "",
+            isRangeEnabled: true,
         };
     },
     created() {
@@ -39,8 +43,28 @@ export default {
     },
     computed: {
         localStorageCollection() {
-            return JSON.parse(localStorage.getItem("collection")) || [];
-        }
+            return JSON.parse(localStorage.getItem("collection")).elements || [];
+        },
+        filteredLegoList() {
+            let filteredList = this.collection;
+            const searchLowerCase = this.search.toLowerCase();
+            if (searchLowerCase) {
+                filteredList = filteredList.filter(
+                    (lego) =>
+                        lego.name.toLowerCase().includes(searchLowerCase) ||
+                        lego.set_num.toLowerCase().includes(searchLowerCase)
+                );
+            }
+            if (this.selectedThemes.length > 0) {
+                filteredList = filteredList.filter((lego) =>
+                    this.selectedThemes.includes(lego.theme_id)
+                );
+            }
+            if (this.year && this.isRangeEnabled) { // Vérifiez si le range est activé
+                filteredList = filteredList.filter((lego) => lego.year == this.year);
+            }
+            return filteredList;
+        },
     },
     watch: {
         localStorageCollection: {
@@ -85,10 +109,16 @@ export default {
                 }
             }
             this.favoriteTheme = maxThemes.join(", ");
-        }
+        },
+        onYearChanged(year) {
+            this.year = year;
+        },
+        onRangeStatusChanged(isEnabled) { // Cette méthode gère le changement d'état du range
+            this.isRangeEnabled = isEnabled;
+        },
     },
     components: {
         LegoCard, Filter, Accordion, YearFilter
     },
-}
+};
 </script>

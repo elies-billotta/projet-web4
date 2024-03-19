@@ -1,8 +1,8 @@
 <template>
   <div class="sidebar">
-    <Filter v-model:search="search" />
-    <YearFilter v-model:year="year" @year-changed="onYearChanged" />
-    <Accordion v-model:selectedThemes="selectedThemes" />
+    <Filter v-model:search="search" type="sets" />
+    <YearFilter v-model:year="year" @year-changed="onYearChanged" type="sets" />
+    <Accordion v-model:selectedThemes="selectedThemes" type="sets" />
   </div>
   <div class="gallery-container">
     <div class="list">
@@ -30,9 +30,9 @@ export default {
   data() {
     return {
       legoList: [],
-      search: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).search : "",
-      selectedThemes: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).themes : [],
-      year: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).year : "2024",
+      search: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.search : "",
+      selectedThemes: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.themes : [],
+      year: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.year : "2024",
       themes: [],
     };
   },

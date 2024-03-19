@@ -29,7 +29,7 @@
       </ul>
       <div class="button-container">
         <BaseButton class="cardButton" v-if="!inCollection" name="Add to collection" @click="addToCollection" />
-        <BaseButton class="cardButton" id="removeButton" v-if="inCollection" name="Remove from collection" @click="addToCollection" />
+        <BaseButton class="cardButton" id="removeButton" v-if="inCollection" name="Remove from collection" @click="removeFromCollection" />
       </div>
     </div>
   </div>
@@ -48,7 +48,6 @@ export default {
     year: Number,
     set_img_url: String,
     theme_id: Number,
-    themes: Array,
     themeName: String,
   },
   data() {
@@ -58,45 +57,40 @@ export default {
   },
   methods: {
     addToCollection() {
-      if (!this.inCollection) {
-        this.inCollection = true;
-        //build an object with the props and emit it
-        const set = {
-          set_num: this.set_num,
-          name: this.name,
-          num_parts: this.num_parts,
-          year: this.year,
-          set_img_url: this.set_img_url,
-          theme_id: this.theme_id,
-          themeName: this.themeName,
-        };
-        let collection = localStorage.getItem('collection');
-        collection = JSON.parse(collection);
-        collection.push(set);
-        //order collection by set_num
-        collection.sort((a, b) => a.set_num.localeCompare(b.set_num));
-        localStorage.collection = JSON.stringify(collection);
-      }
-      else {
-        this.inCollection = false;
-        let collection = localStorage.getItem('collection');
-        collection = JSON.parse(collection);
-        collection = collection.filter((set) => set.set_num !== this.set_num);
-        localStorage.collection = JSON.stringify(collection);
-        this.$emit('item-removed', this.set_num);
-      }
+      this.inCollection = true;
+      const set = {
+        set_num: this.set_num,
+        name: this.name,
+        num_parts: this.num_parts,
+        year: this.year,
+        set_img_url: this.set_img_url,
+        theme_id: this.theme_id,
+        themeName: this.themeName,
+      };
+      let collection = JSON.parse(localStorage.getItem('collection'));
+      collection.elements.push(set);
+      localStorage.setItem('collection', JSON.stringify(collection));
     },
+    removeFromCollection() {
+      this.inCollection = false;
+      let collection = JSON.parse(localStorage.getItem('collection'));
+      collection.elements = collection.elements.filter((set) => set.set_num !== this.set_num);
+      localStorage.setItem('collection', JSON.stringify(collection));
+      this.$emit('item-removed', this.set_num);
+    },
+  },
+  created() {
+    let collection = JSON.parse(localStorage.getItem('collection'));
+    if (collection) {
+      this.inCollection = collection.elements.some((set) => set.set_num === this.set_num);
+    }
   },
   components: {
     BaseButton,
   },
-  created() {
-    let collection = localStorage.getItem('collection');
-    collection = JSON.parse(collection);
-    this.inCollection = collection.some((set) => set.set_num === this.set_num);
-  },
 }
 </script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&display=swap');
@@ -111,7 +105,6 @@ img {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  ;
 }
 
 .card {

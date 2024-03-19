@@ -16,11 +16,14 @@ import BaseButton from "@/components/elements/BaseButton.vue";
 
 export default {
   name: "Accordion",
+  props: {
+    type: String,
+  },
   data() {
     return {
       themes: [],
-      selectedThemes: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).themes : [],
-      isAccordionOpen: localStorage.getItem("filters") ? JSON.parse(localStorage.getItem("filters")).themes.length > 0 : false,
+      selectedThemes: localStorage.getItem(this.type) ? JSON.parse(localStorage.getItem(this.type)).filters.themes : [],
+      isAccordionOpen: localStorage.getItem(this.type) ? JSON.parse(localStorage.getItem(this.type)).filters.themes.length > 0 : false,
     };
   },
   components: { BaseButton },
@@ -82,21 +85,22 @@ export default {
           theme.children.forEach((child) => {
             const childIndex = this.selectedThemes.indexOf(child.id);
             this.selectedThemes.splice(childIndex, 1);
-          }
-          );
+          });
         }
       }
-      const filters = JSON.parse(localStorage.getItem("filters"));
-      filters.themes = this.selectedThemes;
-      localStorage.setItem("filters", JSON.stringify(filters));
-      this.$emit("update:selectedThemes", this.selectedThemes);
+      const localStorageData = JSON.parse(localStorage.getItem(this.type)) || {}; // Récupérer les données du localStorage ou un objet vide
+      const filters = localStorageData.filters || {}; // Récupérer les filtres ou un objet vide
+      filters.themes = this.selectedThemes; // Mettre à jour la propriété themes
+      localStorage.setItem(this.type, JSON.stringify({ ...localStorageData, filters })); // Mettre à jour les données du localStorage en conservant les autres propriétés intactes
+      this.$emit("update:selectedThemes", this.selectedThemes); // Émettre l'événement update:selectedThemes
     },
     resetSelectedThemes() {
       this.selectedThemes = [];
-      const filters = JSON.parse(localStorage.getItem("filters"));
-      filters.themes = this.selectedThemes;
-      localStorage.setItem("filters", JSON.stringify(filters));
-      this.$emit("update:selectedThemes", this.selectedThemes);
+      const localStorageData = JSON.parse(localStorage.getItem(this.type)) || {}; // Récupérer les données du localStorage ou un objet vide
+      const filters = localStorageData.filters || {}; // Récupérer les filtres ou un objet vide
+      filters.themes = this.selectedThemes; // Mettre à jour la propriété themes
+      localStorage.setItem(this.type, JSON.stringify({ ...localStorageData, filters })); // Mettre à jour les données du localStorage en conservant les autres propriétés intactes
+      this.$emit("update:selectedThemes", this.selectedThemes); // Émettre l'événement update:selectedThemes
     },
   },
 };
