@@ -11,7 +11,7 @@
 export default {
   name: "YearFilter",
   props: {
-    type: String, // Ajout de la prop pour spécifier le type (collection ou sets)
+    type: String,
   },
   data() {
     return {
@@ -21,18 +21,18 @@ export default {
   },
   methods: {
     getGalleryYear() {
-      const localStorageData = JSON.parse(localStorage.getItem(this.type)) || {}; // Récupérer les données du localStorage ou un objet vide
-      const filters = localStorageData.filters || {}; // Récupérer les filtres ou un objet vide
-      filters.year = this.year; // Mettre à jour la propriété year
-      localStorage.setItem(this.type, JSON.stringify({ ...localStorageData, filters })); // Mettre à jour les données du localStorage en conservant les autres propriétés intactes
-      this.$emit("year-changed", this.year); // Émettre l'événement year-changed
+      const localStorageData = JSON.parse(localStorage.getItem(this.type)) || {}; 
+      const filters = localStorageData.filters || {};
+      filters.year = this.year;
+      localStorage.setItem(this.type, JSON.stringify({ ...localStorageData, filters })); 
+      this.$emit("year-changed", this.year);
     },
     emitRangeStatus() {
-      const localStorageData = JSON.parse(localStorage.getItem(this.type)) || {}; // Récupérer les données du localStorage ou un objet vide
-      const filters = localStorageData.filters || {}; // Récupérer les filtres ou un objet vide
-      filters.isRangeEnabled = this.isRangeEnabled; // Mettre à jour la propriété isRangeEnabled
-      localStorage.setItem(this.type, JSON.stringify({ ...localStorageData, filters })); // Mettre à jour les données du localStorage en conservant les autres propriétés intactes
-      this.$emit("range-status-changed", this.isRangeEnabled); // Émettre l'événement range-status-changed
+      const localStorageData = JSON.parse(localStorage.getItem(this.type)) || {};
+      const filters = localStorageData.filters || {};
+      filters.isRangeEnabled = this.isRangeEnabled;
+      localStorage.setItem(this.type, JSON.stringify({ ...localStorageData, filters }));
+      this.$emit("range-status-changed", this.isRangeEnabled);
     },
   },
 };
