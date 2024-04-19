@@ -1,5 +1,4 @@
 <template>
-  <Loader v-if="isLoading"/>
   <div class="sidebar">
     <Filter v-model:search="search" type="sets" />
     <YearFilter v-model:year="year" @year-changed="onYearChanged" type="sets" />
@@ -22,7 +21,6 @@ import Filter from "@/components/elements/Filter.vue";
 import Accordion from "@/components/elements/Accordion.vue";
 import BaseButton from "./elements/BaseButton.vue";
 import YearFilter from "@/components/elements/YearFilter.vue";
-import Loader from "@/components/Loader.vue"
 
 export default {
   name: "LegoGallery",
@@ -31,7 +29,6 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
       legoList: [],
       search: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.search : "",
       selectedThemes: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.themes : [],
@@ -59,7 +56,6 @@ export default {
     if (this.view == "collection" && JSON.parse(localStorage.getItem("collection")).length > 0) {
       console.log(JSON.parse(localStorage.getItem("collection")));
       this.legoList = JSON.parse(localStorage.getItem("collection"));
-      this.isLoading = false;
     }
     else {
       this.retrieveSetData(this.year, 1);
@@ -69,11 +65,7 @@ export default {
   methods: {
     async retrieveSetData(year, page) {
       try {
-        this.isLoading = true;
         this.legoList = await getSetMinYear(year, page);
-        setTimeout(() => {
-          this.isLoading = false; // Marquer le chargement comme terminé après 3 secondes
-        }, 3000); // 3000 millisecondes = 3 secondes
       }
       catch (error) {
         console.error("Error retrieving set data:", error);
@@ -94,7 +86,7 @@ export default {
       this.retrieveSetData(this.year, 1);
     },
   },
-  components: { LegoCard, Filter, Accordion, BaseButton, YearFilter, Loader },
+  components: { LegoCard, Filter, Accordion, BaseButton, YearFilter },
 };
 </script>
 
