@@ -31,6 +31,7 @@ export default {
   align-items: center;
   padding: 0.5rem;
   height: 100px;
+  width:100%;
 }
 
 h1 {
@@ -51,4 +52,16 @@ h1 {
 .menu>li {
   margin: 0 1rem;
 }
+
+/* Media query pour les appareils mobiles et tablettes */
+@media only screen and (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  h1{
+    font-size: 2rem;
+  }
+}
+
 </style>

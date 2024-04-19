@@ -115,4 +115,17 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
 }
+/* Ajouter une marge inférieure à chaque carte */
+.list > * {
+  margin-bottom: 1rem; /* Ajustez cette valeur selon l'espacement souhaité */
+}
+/* Ajout de styles pour les petits écrans (par exemple, smartphones) */
+@media only screen and (max-width: 768px) {
+  .gallery-container {
+    height: auto; /* Utilisation de la hauteur automatique sur les petits écrans */
+  }
+  .sidebar{
+    display: none;
+  }
+}
 </style>

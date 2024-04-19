@@ -108,7 +108,8 @@ img {
 }
 
 .card {
-  width: 325px;
+  width: 100%;
+  max-width: 325px;
   background: #FFFBFF;
   padding: 1rem;
   border-radius: 0rem;
@@ -116,8 +117,8 @@ img {
   box-shadow: 0.4rem 0.4rem #05060f;
   overflow: hidden;
   color: black;
-  margin: 1rem;
 }
+
 
 .card:hover {
   transform: translateX(0.2rem) translateY(0.2rem);
@@ -130,6 +131,7 @@ img {
   display: flex;
   flex-direction: column;
   height: 250px; /* Ajoutez la hauteur fixe souhaitée */
+  height: auto;
 }
 
 .name {
@@ -174,6 +176,16 @@ img {
 
 .cardButton {
   flex:1;
+}
+
+@media only screen and (max-width: 768px) {
+  .card {
+    max-width: 90%
+  }
+
+  .imgContainer{
+    height: 1O0px  ;
+  }
 }
 
 </style>
