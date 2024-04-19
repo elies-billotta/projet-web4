@@ -1,14 +1,16 @@
 <template>
-  <div class="sidebar">
-    <Filter v-model:search="search" type="sets" />
-    <YearFilter v-model:year="year" @year-changed="onYearChanged" type="sets" />
-    <Accordion v-model:selectedThemes="selectedThemes" type="sets" />
-  </div>
-  <div class="gallery-container">
-    <div class="list">
-      <LegoCard v-for="lego in filteredLegoList" :key="lego.set_num" :set_num="lego.set_num" :name="lego.name"
-        :num_parts="lego.num_parts" :year="lego.year" :set_img_url="lego.set_img_url" :theme_id="lego.theme_id"
-        :themeName="this.themes.find((theme) => theme.id === lego.theme_id).name" />
+  <div class="main-container">
+    <div class="sidebar">
+      <Filter v-model:search="search" type="sets" />
+      <YearFilter v-model:year="year" @year-changed="onYearChanged" type="sets" />
+      <Accordion v-model:selectedThemes="selectedThemes" type="sets" />
+    </div>
+    <div class="gallery-container">
+      <div class="list">
+        <LegoCard v-for="lego in filteredLegoList" :key="lego.set_num" :set_num="lego.set_num" :name="lego.name"
+          :num_parts="lego.num_parts" :year="lego.year" :set_img_url="lego.set_img_url" :theme_id="lego.theme_id"
+          :themeName="this.themes.find((theme) => theme.id === lego.theme_id).name" />
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +36,7 @@ export default {
       selectedThemes: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.themes : [],
       year: localStorage.getItem("sets") ? JSON.parse(localStorage.getItem("sets")).filters.year : "2024",
       themes: [],
+      sidebarVisible: false,
     };
   },
   computed: {
@@ -85,12 +88,20 @@ export default {
       this.year = newYear;
       this.retrieveSetData(this.year, 1);
     },
+    toggleSidebar() {
+      this.sidebarVisible = !this.sidebarVisible;
+    }
   },
   components: { LegoCard, Filter, Accordion, BaseButton, YearFilter },
 };
 </script>
 
 <style>
+.main-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -115,18 +126,33 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 /* Ajouter une marge inférieure à chaque carte */
-.list > * {
-  margin-bottom: 1rem; /* Ajustez cette valeur selon l'espacement souhaité */
+.list>* {
+  margin-bottom: 1rem;
+  /* Ajustez cette valeur selon l'espacement souhaité */
 }
+
 /* Ajout de styles pour les petits écrans (par exemple, smartphones) */
 @media only screen and (max-width: 768px) {
   .gallery-container {
-    height: auto; /* Utilisation de la hauteur automatique sur les petits écrans */
-    overflow: hidden;
+    height: calc(67vh - 50px - 100px);
+    /* Utilisation de la hauteur automatique sur les petits écrans */
+    overflow: scroll;
   }
-  .sidebar{
-    display: none;
+
+  .sidebar {
+    border: 0;
+    border-bottom: 0.1rem solid #05060f;
   }
+
+  .main-container {
+    flex-direction: column;
+  }
+
+  h3 {
+  display: none;
+}
+
 }
 </style>

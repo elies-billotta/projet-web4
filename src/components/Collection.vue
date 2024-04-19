@@ -1,8 +1,11 @@
 <template>
-    <div v-if="collection.length != 0" class="sidebar">
-        <h2>Ma collection</h2>
-        <div>Total des pièces : {{ nbPartsTotal }}</div>
-        <div>Thème favori : {{ favoriteTheme }}</div>
+    <div class="main-container">
+    <div class="sidebar" v-if="collection.length != 0">
+        <h3>Ma collection</h3>
+        <div class="info-container">
+            <div>Total des pièces : {{ nbPartsTotal }}</div>
+            <div>Thème favori : {{ favoriteTheme }}</div>
+        </div>
         <Filter v-model:search="search" type="collection" />
         <YearFilter v-model:year="year" @year-changed="onYearChanged" type="collection" @range-status-changed="onRangeStatusChanged" />
         <Accordion v-model:selectedThemes="selectedThemes" type="collection" />
@@ -15,6 +18,7 @@
         </div>
         <div v-if="collection.length == 0"> Nothing to show</div>
     </div>
+</div>
 </template>
 
 <script>
@@ -122,3 +126,22 @@ export default {
     },
 };
 </script>
+<style>
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .gallery-container {
+    height: calc(60vh - 50px - 100px);
+    /* Utilisation de la hauteur automatique sur les petits écrans */
+    overflow: scroll;
+  }
+}
+
+
+
+</style>

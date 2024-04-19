@@ -1,7 +1,8 @@
 <template>
   <div class="header">
     <h1>LEGOrganizer</h1>
-    <ul class="menu">
+    <ul class="menu" style="
+    padding-left: 0px;">
       <li><router-link to="/">
           <BaseButton name="Sets" />
         </router-link></li>
@@ -69,8 +70,9 @@ h1 {
 
   h1{
     margin-top:50px;
-    font-size: 2rem;
+    font-size: 2.3rem;
     margin-left: 0;
+    margin-bottom: 0;
   }
 
   .menu {
@@ -82,12 +84,13 @@ h1 {
 }
 
 .menu > ul {
+  padding-left : 0;
   margin-left: 0;
 }
 
 .menu > li {
   margin-right: 0;
-} 
+}
 }
 
 </style>

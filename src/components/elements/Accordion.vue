@@ -109,7 +109,7 @@ export default {
 <style>
 .panel {
   margin-top: 5px;
-  max-height: 390px;
+  max-height: 350px;
   overflow-y: auto;
   transition: max-height 1s ease-out;
   scrollbar-width: none;
