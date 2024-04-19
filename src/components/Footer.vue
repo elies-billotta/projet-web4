@@ -13,7 +13,10 @@ export default {
 <style>
 footer {
     position: absolute;
-    height: 50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
     bottom: 0;
     width: 100%;
     align-items: center;
@@ -21,7 +24,6 @@ footer {
     border-bottom: 0;
     border-right: 0;
     border-left: 0;
-    padding: 1rem;
     background-color: #f4d738;
     text-align: center;
 }

@@ -26,10 +26,9 @@ export default {
   background-color: #F4D738;
   border-bottom: #05060f 0.1rem solid;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: row;
   align-items: center;
-  padding: 0.5rem;
   height: 100px;
   width:100%;
 }
@@ -39,29 +38,56 @@ h1 {
   font-size: 3rem;
   text-align: center;
   color: #05060f;
-  margin: 0;
-  padding: 1rem;
+  margin-left: 1rem;
 }
 
 .menu {
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  justify-content: right;
   list-style: none;
-  justify-content: center;
+  width: 100%;
 }
 
-.menu>li {
-  margin: 0 1rem;
+.menu > li {
+  margin-right: 1rem;
+}
+
+.menu > ul {
+  padding-left: 0;
+  margin-left: 0;
 }
 
 /* Media query pour les appareils mobiles et tablettes */
 @media only screen and (max-width: 768px) {
-  .menu {
-    display: none;
+  .header {
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
   }
 
   h1{
+    margin-top:50px;
     font-size: 2rem;
+    margin-left: 0;
   }
+
+  .menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.menu > ul {
+  margin-left: 0;
+}
+
+.menu > li {
+  margin-right: 0;
+} 
 }
 
 </style>

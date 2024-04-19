@@ -123,6 +123,7 @@ export default {
 @media only screen and (max-width: 768px) {
   .gallery-container {
     height: auto; /* Utilisation de la hauteur automatique sur les petits écrans */
+    overflow: hidden;
   }
   .sidebar{
     display: none;

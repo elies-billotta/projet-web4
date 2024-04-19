@@ -12,7 +12,6 @@ export default {
 </script>
 <style>
 .btn {
-  margin-top: 1rem;
   font-size: 1.2rem;
   padding: 0.4rem 1.5rem;
   background-color: #00A676;
