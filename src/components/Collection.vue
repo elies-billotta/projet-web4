@@ -136,9 +136,13 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .gallery-container {
-    height: calc(60vh - 50px - 100px);
+    height: calc(65vh - 50px - 100px);
     /* Utilisation de la hauteur automatique sur les petits écrans */
     overflow: scroll;
+  }
+
+  .info-container {
+    flex-direction: row;
   }
 }
 

@@ -98,6 +98,7 @@ export default {
 
 <style>
 .main-container {
+  height: calc(94.6vh - 50px - 100px);
   display: flex;
   flex-direction: row;
 }
@@ -122,7 +123,7 @@ export default {
 }
 
 .gallery-container {
-  height: calc(94.6vh - 50px - 100px);
+  height: auto  ;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -136,7 +137,6 @@ export default {
 /* Ajout de styles pour les petits écrans (par exemple, smartphones) */
 @media only screen and (max-width: 768px) {
   .gallery-container {
-    height: calc(67vh - 50px - 100px);
     /* Utilisation de la hauteur automatique sur les petits écrans */
     overflow: scroll;
   }
@@ -147,6 +147,7 @@ export default {
   }
 
   .main-container {
+    height: calc(94.6vh - 100px - 100px);
     flex-direction: column;
   }
 
